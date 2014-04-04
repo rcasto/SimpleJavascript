@@ -2,6 +2,7 @@
 
 function Clock(container) {
     this.clockHolder = document.createElement("div");
+    this.running = false;
     container.appendChild(this.clockHolder);
 }
 
@@ -27,14 +28,32 @@ Clock.prototype.getTime = function () {
 };
 
 Clock.prototype.startClock = function () {
-    var that = this;
+    this.running = true;
+    this.updateClock();
+};
+
+Clock.prototype.updateClock = function () {
+    if (!this.running) {
+        return;
+    }
+
+    var that = this; // save context
+
     this.clockHolder.innerHTML = this.getTime();
+
     setTimeout(function () {
-        that.startClock();
+        that.updateClock();
     }, 1000);
+};
+
+Clock.prototype.stopClock = function () {
+    this.running = false;
 };
 
 window.onload = function () {
     var clock = new Clock(document.body);
     clock.startClock();
+    setTimeout(function () {
+        clock.stopClock();
+    }, 5000);
 };
