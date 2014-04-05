@@ -1,0 +1,10 @@
+ul #testResults {
+}
+
+li.pass {
+    color: green;
+}
+
+li.fail {
+    color: red;
+}
