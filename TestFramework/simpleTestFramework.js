@@ -1,15 +1,24 @@
+var TEST_CONTAINER = "testResults";
+
+function getTestResultContainer(id) {
+    return document.getElementById('testResults');
+}
+
+function createTestResultEntry(result, desc) {
+    var testResult = document.createElement('li');
+    testResult.className = result ? 'pass' : 'fail';
+    testResult.appendChild(document.createTextNode(desc));
+    return testResult;
+}
+
 /*
     This method asserts that the input expression is true
     expr - expression that evaluates to true or false
     desc - description of the assertion being tested
 */
 function assertTrue(expr, desc) {
-    var testResultList = document.getElementById('testResults');
-    var testResult = document.createElement('li');
-    testResult.className = expr ? 'pass' : 'fail';
-
-    testResult.appendChild(document.createTextNode(desc));
-
+    var testResultList = getTestResultContainer(TEST_CONTAINER);
+    var testResult = createTestResultEntry(expr, desc);
     testResultList.appendChild(testResult);
 }
 
@@ -19,12 +28,8 @@ function assertTrue(expr, desc) {
     desc - description of the assertion being tested
 */
 function assertFalse(expr, desc) {
-    var testResultList = document.getElementById('testResults');
-    var testResult = document.createElement('li');
-    testResult.className = !expr ? 'pass' : 'fail';
-
-    testResult.appendChild(document.createTextNode(desc));
-
+    var testResultList = getTestResultContainer(TEST_CONTAINER);
+    var testResult = createTestResultEntry(!expr, desc);
     testResultList.appendChild(testResult);
 }
 
@@ -38,7 +43,7 @@ function TestSuite() {
 // Inject a test list into document body, to show test results
 window.onload = function () {
     var ul = document.createElement('ul');
-    ul.id = "testResults";
+    ul.id = TEST_CONTAINER;
 
     ul.appendChild(document.createTextNode('Test Results'));
 
